@@ -16,7 +16,7 @@ export default function Footer({ onAgendar }: FooterProps) {
     <footer style={{ background: "#111", padding: "60px 24px 32px", fontFamily: S.font as string, color: "#888" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 48, marginBottom: 48 }} className="grid-3">
-          
+
           {/* Coluna 1: Logo e Descrição */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 16 }}>
@@ -33,17 +33,42 @@ export default function Footer({ onAgendar }: FooterProps) {
 
           {/* Coluna 2: Navegação */}
           <div>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 16, letterSpacing: 1, textTransform: "uppercase" }}>Navegação</p>
+            <p style={{
+              fontSize: 13,
+              fontWeight: 700,
+              color: "#fff",
+              marginBottom: 16,
+              letterSpacing: 1,
+              textTransform: "uppercase"
+            }}>
+              Navegação
+            </p>
+
             {NAV_LINKS.map(l => (
-              <button 
-                key={l.href} 
-                onClick={() => scrollTo(l.href)}
-                style={{
-                  display: "block", background: "none", border: "none", color: "#666", 
-                  fontSize: 14, cursor: "pointer", fontFamily: S.font as string, 
-                  padding: "4px 0", textAlign: "left", transition: "color 0.2s"
+              <button
+                key={l.href}
+                onClick={() => {
+                  // Verifica se o link é o "Início" pelo href ou pelo texto
+                  if (l.href === "#home" || l.href === "#inicio" || l.label.toLowerCase() === "início") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  } else {
+                    // Para os outros links (Sobre, Serviços, etc), usa a sua função scrollTo por ID
+                    scrollTo(l.href);
+                  }
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = S.green as string)} 
+                style={{
+                  display: "block",
+                  background: "none",
+                  border: "none",
+                  color: "#666",
+                  fontSize: 14,
+                  cursor: "pointer",
+                  fontFamily: S.font as string,
+                  padding: "4px 0",
+                  textAlign: "left",
+                  transition: "color 0.2s"
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = S.green as string)}
                 onMouseLeave={e => (e.currentTarget.style.color = "#666")}
               >
                 {l.label}
@@ -56,8 +81,8 @@ export default function Footer({ onAgendar }: FooterProps) {
             <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 16, letterSpacing: 1, textTransform: "uppercase" }}>Contato</p>
             <p style={{ fontSize: 14, color: "#666", marginBottom: 6 }}>{CONFIG.instagram}</p>
             <p style={{ fontSize: 14, color: "#666", marginBottom: 6 }}>{CONFIG.email}</p>
-            <button 
-              style={{ ...(btn.primary as React.CSSProperties), marginTop: 12, padding: "10px 20px", fontSize: 13 }} 
+            <button
+              style={{ ...(btn.primary as React.CSSProperties), marginTop: 12, padding: "10px 20px", fontSize: 13 }}
               onClick={onAgendar}
               onMouseEnter={e => (e.currentTarget.style.background = S.greenHover as string)}
               onMouseLeave={e => (e.currentTarget.style.background = S.green as string)}
