@@ -31,7 +31,7 @@ export default function About() {
                 boxShadow: `0 20px 56px rgba(82,183,136,0.2)`, overflow: "hidden",
               }}>
                 <img
-                  src="/leticiabarros.jpeg"
+                  src="/leticiabarros.png"
                   alt={`Psicóloga ${CONFIG.name}`}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '24px', border: `6px solid ${S.white}`, transition: 'transform 0.3s ease' }}
                 />
@@ -110,7 +110,7 @@ export default function About() {
                 boxShadow: `0 20px 56px rgba(82,183,136,0.15)`, overflow: "hidden",
               }}>
                 <img
-                  src="/miriam.jpeg" // Coloque a foto da Miriam aqui
+                  src="/miriam.png" // Coloque a foto da Miriam aqui
                   alt="Miriam Pimenta - Musicoterapeuta"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '24px', border: `6px solid ${S.white}` }}
                 />
