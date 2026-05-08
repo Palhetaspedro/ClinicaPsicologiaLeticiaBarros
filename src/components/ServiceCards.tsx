@@ -76,7 +76,7 @@ export default function ServiceCards() {
           }} />
 
           <img
-            src="./images/Crer&ser.png"
+            src="./public/crer&ser.png"
             alt="Logo Clínica Crer & Ser"
             style={{
               height: "350px",
