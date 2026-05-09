@@ -91,9 +91,10 @@ export default function Page() {
       
       <main>
         <Hero onAgendar={() => setModalOpen(true)} />
-        <ServiceCards />
-        <About />
+        <ServiceCards /> 
         <ContactCards />
+        <About />
+       
       </main>
 
       <Footer onAgendar={() => setModalOpen(true)} />
