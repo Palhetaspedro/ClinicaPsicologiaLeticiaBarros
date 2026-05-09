@@ -1,5 +1,5 @@
 export const CONFIG = {
-  name: "Letícia Barros",
+  name: "Crer&Ser",
   crp: "CRP 09/19767",
   whatsapp: "5562993180772",
   email: "levpsico@gmail.com",

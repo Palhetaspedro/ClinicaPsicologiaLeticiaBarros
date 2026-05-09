@@ -52,8 +52,8 @@ export default function About() {
                   style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "24px", border: `6px solid ${S.white}`, transition: "transform 0.3s ease" }}
                 />
                 <div style={{ position: "absolute", bottom: "20px", right: "10%", background: S.white as string, padding: "12px 20px", borderRadius: "12px", boxShadow: S.shadow as string, zIndex: 2, textAlign: "center", border: `1.5px solid ${S.border}` }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: S.dark as string }}>{CONFIG.name}</div>
-                  <div style={{ fontSize: 11, color: S.green as string, fontWeight: 600 }}>{CONFIG.crp}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: S.dark as string }}>Letícia Barros</div>
+                  <div style={{ fontSize: 11, color: S.green as string, fontWeight: 600 }}>CRP 09/19767</div>
                 </div>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function About() {
 
           {/* Text col */}
           <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(30px)", transition: "all .8s ease .3s" }}>
-            
+
             <p style={{ fontSize: 16, color: S.gray as string, lineHeight: 1.85, marginBottom: 20 }}>
               <strong style={{ color: S.dark as string }}>Larissa Campos Mendes</strong> é Neuropsicopedagoga especializada em avaliação, acompanhamento pedagógico e psicopedagógico, com um olhar atento e individualizado para cada etapa do desenvolvimento da aprendizagem.
             </p>
