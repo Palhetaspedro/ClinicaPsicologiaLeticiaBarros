@@ -105,14 +105,14 @@ export default function About() {
               </p>
             </div>
             <p style={{ fontSize: 16, color: S.gray as string, lineHeight: 1.85, marginBottom: 10 }}>
-              Contamos com o suporte de <strong style={{ color: S.dark as string }}>Miriam Pimenta</strong>, nossa Musicoterapeuta, garantindo um atendimento multidisciplinar e focado no bem-estar integral.
+              Contamos com o suporte de <strong style={{ color: S.dark as string }}>Miriam Pimenta</strong>, Musicoterapeuta, pedagoga e especialista em ABA (IPOG), dedicada ao desenvolvimento infantil de forma acolhedora e individualizada. Utilizo a música e estratégias terapêuticas para estimular a comunicação, a aprendizagem e as emoções das crianças. Na vida pessoal, sou casada com o Antônio e mãe do Guilherme e do João Victor.
             </p>
             <p style={{ fontSize: 14, color: S.gray as string, marginBottom: 24 }}>
               <strong>Telefone:</strong> (62) 99171005
             </p>
           </div>
 
-          {/* Photo col (Miriam) — vai abaixo do texto no mobile */}
+          {/* Photo col (Miriam) */}
           <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(30px)", transition: "all .8s ease .2s", display: "flex", justifyContent: "center" }}>
             <div style={{ position: "relative" }}>
               <div style={{
@@ -134,8 +134,61 @@ export default function About() {
               </div>
             </div>
           </div>
-
         </div>
+
+        {/* DIVISOR */}
+        <hr style={{ border: "none", height: "1px", background: S.border as string, opacity: 0.5 }} />
+
+        {/* BLOCO 3: LARISSA CAMPOS MENDES */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: isMobile ? 36 : 80,
+          alignItems: "center",
+        }} className="grid-2">
+
+          {/* Photo col */}
+          <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(-30px)", transition: "all .8s ease .3s", display: "flex", justifyContent: "center" }}>
+            <div style={{ position: "relative" }}>
+              <div style={{
+                ...photoSize,
+                borderRadius: "80px 24px 80px 24px",
+                background: `linear-gradient(160deg,${S.greenLight},${S.greenBg})`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: `0 20px 56px rgba(82,183,136,0.2)`, overflow: "hidden",
+              }}>
+                <img
+                  src="/larissa.png"
+                  alt="Larissa Campos Mendes - Neuropsicopedagoga"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "24px", border: `6px solid ${S.white}`, transition: "transform 0.3s ease" }}
+                />
+                <div style={{ position: "absolute", bottom: "20px", right: "10%", background: S.white as string, padding: "12px 20px", borderRadius: "12px", boxShadow: S.shadow as string, zIndex: 2, textAlign: "center", border: `1.5px solid ${S.border}` }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: S.dark as string }}>Larissa Campos Mendes</div>
+                  <div style={{ fontSize: 11, color: S.green as string, fontWeight: 600 }}>Neuropsicopedagoga</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Text col */}
+          <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(30px)", transition: "all .8s ease .3s" }}>
+            
+            <p style={{ fontSize: 16, color: S.gray as string, lineHeight: 1.85, marginBottom: 20 }}>
+              <strong style={{ color: S.dark as string }}>Larissa Campos Mendes</strong> é Neuropsicopedagoga especializada em avaliação, acompanhamento pedagógico e psicopedagógico, com um olhar atento e individualizado para cada etapa do desenvolvimento da aprendizagem.
+            </p>
+            <p style={{ fontSize: 16, color: S.gray as string, lineHeight: 1.85, marginBottom: 36 }}>
+              Com dedicação e método, atua na identificação de dificuldades de aprendizagem e no desenvolvimento de estratégias personalizadas, promovendo o potencial de cada pessoa por meio de intervenções fundamentadas na <strong style={{ color: S.green as string }}>Neuropsicopedagogia</strong>.
+            </p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              {[["🧠", "Neuropsicopedagogia"], ["📋", "Avaliação"], ["📚", "Acompanhamento"], ["🌱", "Desenvolvimento"]].map(([ic, lb]) => (
+                <div key={lb} style={{ display: "flex", alignItems: "center", gap: 8, background: S.greenLight as string, borderRadius: 50, padding: "8px 16px" }}>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: S.dark as string }}>{ic} {lb}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
