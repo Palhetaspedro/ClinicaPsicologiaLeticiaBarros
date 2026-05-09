@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { S } from "../styles/theme";
+import AppointmentModal from "./AppointmentModal"; // ajuste o caminho se necessário
 
 // Definição dos serviços
 const SERVICES = [
@@ -50,31 +51,38 @@ interface ServiceProps {
 }
 
 export default function ServiceCards() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [hov, setHov] = useState(false);
+
   return (
     <section id="servicos" style={{ padding: "100px 24px", background: S.white as string, fontFamily: S.font as string }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
 
-        {/* Container da Logo no Topo com Destaque Artístico */}
+        {/* Container da Logo */}
         <div style={{
           display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          position: "relative", // Necessário para o efeito de fundo
+          position: "relative",
           marginBottom: 48,
-          padding: "20px 0"
+          padding: "20px 0 36px",
         }}>
 
-          {/* Efeito de Brilho Suave (Atrás da Logo) */}
+          {/* Efeito de Brilho Suave */}
           <div style={{
             position: "absolute",
             width: "400px",
             height: "300px",
-            background: S.greenBg as string, // Cor suave do seu tema
+            background: S.greenBg as string,
             borderRadius: "50%",
-            filter: "blur(60px)", // Cria a névoa suave
+            filter: "blur(60px)",
             opacity: 0.6,
-            zIndex: 0
+            zIndex: 0,
+            top: 0,
           }} />
 
+          {/* Logo */}
           <img
             src="/crerser.png"
             alt="Logo Clínica Crer & Ser"
@@ -82,14 +90,48 @@ export default function ServiceCards() {
               height: "350px",
               width: "auto",
               objectFit: "contain",
-              position: "relative", // Garante que a logo fique sobre o brilho
+              position: "relative",
               zIndex: 1,
-              // Sombra suave para dar relevo à logo
               filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.08))"
             }}
           />
+
+          {/* Botão Agendar — abre o AppointmentModal */}
+          <div style={{ position: "relative", zIndex: 1, marginTop: 28 }}>
+            <button
+              onClick={() => setModalOpen(true)}
+              onMouseEnter={() => setHov(true)}
+              onMouseLeave={() => setHov(false)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "16px 40px",
+                background: hov ? "transparent" : (S.green as string),
+                color: hov ? (S.green as string) : "#fff",
+                border: `2px solid ${S.green as string}`,
+                borderRadius: "50px",
+                fontSize: 15,
+                fontWeight: 700,
+                fontFamily: S.font as string,
+                letterSpacing: 0.5,
+                cursor: "pointer",
+                transition: "all .25s ease",
+                boxShadow: hov ? "none" : "0 8px 24px rgba(0,0,0,0.12)",
+              }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 18, height: 18 }}>
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Agendar Consulta
+            </button>
+          </div>
         </div>
 
+        {/* Título da seção */}
         <div style={{ textAlign: "center", marginBottom: 64 }}>
           <p style={{ fontSize: 13, fontWeight: 600, color: S.green as string, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
             O que ofereço
@@ -99,12 +141,16 @@ export default function ServiceCards() {
           </h2>
         </div>
 
+        {/* Cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 24 }}>
           {SERVICES.map((s, i) => (
             <ServiceCard key={s.id} s={s} delay={i * 80} />
           ))}
         </div>
       </div>
+
+      {/* Modal de Agendamento */}
+      <AppointmentModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </section>
   );
 }
@@ -113,7 +159,6 @@ function ServiceCard({ s, delay }: ServiceProps) {
   const [hov, setHov] = useState(false);
   const [vis, setVis] = useState(false);
 
-  // Tipagem do Ref para o observador de interseção
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -123,7 +168,6 @@ function ServiceCard({ s, delay }: ServiceProps) {
       },
       { threshold: 0.1 }
     );
-
     if (ref.current) ob.observe(ref.current);
     return () => ob.disconnect();
   }, [delay]);
