@@ -71,7 +71,7 @@ export default function About() {
               Com sensibilidade e compromisso, promovo o cuidado emocional, o autoconhecimento e o fortalecimento pessoal, utilizando a abordagem da <strong style={{ color: S.green as string }}>Terapia Cognitivo-Comportamental (TCC)</strong> e respeitando a individualidade e os valores de cada paciente.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {[["💚", "Empatia"], ["🧩", "TCC"], ["🌱", "Autoconhecimento"], ["🔒", "Sigilo"]].map(([ic, lb]) => (
+              {[["💚", "Empatia"], ["", "TCC"], ["", "Autoconhecimento"], ["", "Sigilo"]].map(([ic, lb]) => (
                 <div key={lb} style={{ display: "flex", alignItems: "center", gap: 8, background: S.greenLight as string, borderRadius: 50, padding: "8px 16px" }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: S.dark as string }}>{ic} {lb}</span>
                 </div>
@@ -180,7 +180,7 @@ export default function About() {
               Com dedicação e método, atua na identificação de dificuldades de aprendizagem e no desenvolvimento de estratégias personalizadas, promovendo o potencial de cada pessoa por meio de intervenções fundamentadas na <strong style={{ color: S.green as string }}>Neuropsicopedagogia</strong>.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {[["🧠", "Neuropsicopedagogia"], ["📋", "Avaliação"], ["📚", "Acompanhamento"], ["🌱", "Desenvolvimento"]].map(([ic, lb]) => (
+              {[["🧠", "Neuropsicopedagogia"], ["", "Avaliação"], ["", "Acompanhamento"], ["", "Desenvolvimento"]].map(([ic, lb]) => (
                 <div key={lb} style={{ display: "flex", alignItems: "center", gap: 8, background: S.greenLight as string, borderRadius: 50, padding: "8px 16px" }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: S.dark as string }}>{ic} {lb}</span>
                 </div>
