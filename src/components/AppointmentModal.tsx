@@ -4,9 +4,13 @@ import { CONFIG } from "../constants/config";
 import { TIMES } from "../constants/navLinks";
 import { utils } from "../utils/validators";
 
-// --- COMPONENTES AUXILIARES (FORA DO COMPONENTE PRINCIPAL PARA NÃO PERDER O FOCO) ---
+const SERVICES = [
+  { id: "musicoterapia", label: "Musicoterapia", icon: "" },
+  { id: "psicologa", label: "Psicóloga", icon: "" },
+  { id: "neuropsicopedagoga", label: "Neuropsicopedagoga", icon: "" },
+];
 
-const Field = ({ label, err, children }: { label: string, err?: string, children: React.ReactNode }) => (
+const Field = ({ label, err, children }: { label: string; err?: string; children: React.ReactNode }) => (
   <div style={{ marginBottom: 20 }}>
     <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: S.dark as string, marginBottom: 7, fontFamily: S.font as string }}>
       {label}
@@ -15,8 +19,6 @@ const Field = ({ label, err, children }: { label: string, err?: string, children
     {err && <p style={{ color: "#EF4444", fontSize: 12, marginTop: 5, fontFamily: S.font as string }}>{err}</p>}
   </div>
 );
-
-// --- COMPONENTE PRINCIPAL ---
 
 interface AppointmentModalProps {
   open: boolean;
@@ -27,6 +29,7 @@ interface FormState {
   name: string;
   email: string;
   phone: string;
+  service: string; // ← NOVO
   date: string;
   time: string;
   msg: string;
@@ -35,7 +38,9 @@ interface FormState {
 
 export default function AppointmentModal({ open: isOpen, onClose }: AppointmentModalProps) {
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<FormState>({ name: "", email: "", phone: "", date: "", time: "", msg: "", lgpd: false });
+  const [form, setForm] = useState<FormState>({
+    name: "", email: "", phone: "", service: "", date: "", time: "", msg: "", lgpd: false,
+  });
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [sent, setSent] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -45,7 +50,7 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
       setStep(1);
       setSent(false);
       setErrors({});
-      setForm({ name: "", email: "", phone: "", date: "", time: "", msg: "", lgpd: false });
+      setForm({ name: "", email: "", phone: "", service: "", date: "", time: "", msg: "", lgpd: false });
     }
   }, [isOpen]);
 
@@ -70,6 +75,7 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
     if (!form.name.trim() || form.name.trim().split(" ").length < 2) e.name = "Digite seu nome completo";
     if (!utils.isEmail(form.email)) e.email = "E-mail inválido";
     if (form.phone.replace(/\D/g, "").length < 10) e.phone = "Telefone inválido";
+    if (!form.service) e.service = "Selecione um tipo de serviço"; // ← NOVO
     if (!form.lgpd) e.lgpd = "Aceite obrigatório para continuar";
     setErrors(e);
     return !Object.keys(e).length;
@@ -87,7 +93,15 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
 
   const send = () => {
     if (!validate2()) return;
-    const txt = `Olá, gostaria de realizar um agendamento.%0ANome: ${encodeURIComponent(form.name)}%0ATelefone: ${encodeURIComponent(form.phone)}%0AE-mail: ${encodeURIComponent(form.email)}%0AData: ${form.date}%0AHorário: ${form.time}${form.msg ? `%0AMensagem: ${encodeURIComponent(form.msg)}` : ""}`;
+    const txt =
+      `Olá, gostaria de realizar um agendamento.` +
+      `%0ANome: ${encodeURIComponent(form.name)}` +
+      `%0ATelefone: ${encodeURIComponent(form.phone)}` +
+      `%0AE-mail: ${encodeURIComponent(form.email)}` +
+      `%0AServiço: ${encodeURIComponent(form.service)}` + // ← NOVO
+      `%0AData: ${form.date}` +
+      `%0AHorário: ${form.time}` +
+      (form.msg ? `%0AMensagem: ${encodeURIComponent(form.msg)}` : "");
     window.open(`https://wa.me/${CONFIG.whatsapp}?text=${txt}`, "_blank");
     setSent(true);
   };
@@ -100,17 +114,16 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
       background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)", padding: 16,
     }}>
       <div ref={ref} style={{
-        background: S.white as string, borderRadius: 24, padding: "0", width: "100%", maxWidth: 480,
+        background: S.white as string, borderRadius: 24, padding: 0, width: "100%", maxWidth: 480,
         boxShadow: "0 24px 64px rgba(0,0,0,0.18)", fontFamily: S.font as string, overflow: "hidden", maxHeight: "90vh", overflowY: "auto",
       }}>
-        
         {/* Header */}
         <div style={{ padding: "28px 32px 24px", borderBottom: `1px solid ${S.border}`, position: "relative" }}>
           {step === 2 && !sent && (
             <button onClick={() => { setStep(1); setErrors({}); }} style={{
               background: "none", border: "none", cursor: "pointer", color: S.gray as string, fontSize: 13,
               fontFamily: S.font as string, display: "flex", alignItems: "center", gap: 6, marginBottom: 12, padding: 0,
-            }}> ← Voltar </button>
+            }}>← Voltar</button>
           )}
           <button onClick={onClose} style={{
             position: "absolute", top: 20, right: 20, background: S.grayLight as string, border: "none",
@@ -131,7 +144,7 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
               </h2>
             </>
           )}
-          {sent && <h2 style={{ fontSize: 22, fontWeight: 800, color: S.dark as string, margin: 0 }}>Quase lá! </h2>}
+          {sent && <h2 style={{ fontSize: 22, fontWeight: 800, color: S.dark as string, margin: 0 }}>Quase lá!</h2>}
         </div>
 
         {/* Body */}
@@ -144,33 +157,38 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
           ) : step === 1 ? (
             <>
               <Field label="Nome completo" err={errors.name}>
-                <input 
-                  value={form.name} 
-                  onChange={e => updateField("name", e.target.value)} 
-                  placeholder="Seu nome completo"
-                  style={{ ...(inp.base as React.CSSProperties), ...(errors.name ? (inp.error as React.CSSProperties) : {}) }} 
-                />
+                <input value={form.name} onChange={e => updateField("name", e.target.value)} placeholder="Seu nome completo"
+                  style={{ ...(inp.base as React.CSSProperties), ...(errors.name ? (inp.error as React.CSSProperties) : {}) }} />
               </Field>
-              
+
               <Field label="E-mail" err={errors.email}>
-                <input 
-                  value={form.email} 
-                  onChange={e => updateField("email", e.target.value)} 
-                  placeholder="seu@email.com" 
-                  type="email"
-                  style={{ ...(inp.base as React.CSSProperties), ...(errors.email ? (inp.error as React.CSSProperties) : {}) }} 
-                />
+                <input value={form.email} onChange={e => updateField("email", e.target.value)} placeholder="seu@email.com" type="email"
+                  style={{ ...(inp.base as React.CSSProperties), ...(errors.email ? (inp.error as React.CSSProperties) : {}) }} />
               </Field>
 
               <Field label="Telefone" err={errors.phone}>
-                <input 
-                  value={form.phone} 
-                  onChange={e => updateField("phone", e.target.value.replace(/\D/g, ""))} 
-                  placeholder="Somente números (DDD + Número)"
-                  type="tel"
-                  style={{ ...(inp.base as React.CSSProperties), ...(errors.phone ? (inp.error as React.CSSProperties) : {}) }} 
-                />
+                <input value={form.phone} onChange={e => updateField("phone", e.target.value.replace(/\D/g, ""))} placeholder="Somente números (DDD + Número)" type="tel"
+                  style={{ ...(inp.base as React.CSSProperties), ...(errors.phone ? (inp.error as React.CSSProperties) : {}) }} />
               </Field>
+
+              {/* ↓ BLOCO NOVO DE SELEÇÃO DE SERVIÇO */}
+              <Field label="Tipo de serviço" err={errors.service}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+                  {SERVICES.map(svc => (
+                    <button key={svc.id} onClick={() => updateField("service", svc.label)} style={{
+                      padding: "14px 8px", borderRadius: 12, fontSize: 12, fontWeight: 600, textAlign: "center",
+                      border: `1.5px solid ${form.service === svc.label ? S.green : S.border}`,
+                      background: form.service === svc.label ? S.green as string : S.white as string,
+                      color: form.service === svc.label ? "#fff" : S.gray as string,
+                      cursor: "pointer", lineHeight: 1.4, fontFamily: S.font as string,
+                    }}>
+                      <div style={{ fontSize: 22, marginBottom: 6 }}>{svc.icon}</div>
+                      {svc.label}
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              {/* ↑ FIM DO BLOCO NOVO */}
 
               <div style={{ marginBottom: 28 }}>
                 <label style={{ display: "flex", gap: 12, alignItems: "flex-start", cursor: "pointer" }}>
@@ -185,7 +203,8 @@ export default function AppointmentModal({ open: isOpen, onClose }: AppointmentM
           ) : (
             <>
               <Field label="Data" err={errors.date}>
-                <input type="date" value={form.date} min={utils.today()} onChange={e => updateField("date", e.target.value)} style={{ ...(inp.base as React.CSSProperties) }} />
+                <input type="date" value={form.date} min={utils.today()} onChange={e => updateField("date", e.target.value)}
+                  style={{ ...(inp.base as React.CSSProperties) }} />
               </Field>
 
               <div style={{ marginBottom: 20 }}>
