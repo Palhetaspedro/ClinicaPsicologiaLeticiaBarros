@@ -105,7 +105,7 @@ export default function About() {
               </p>
             </div>
             <p style={{ fontSize: 16, color: S.gray as string, lineHeight: 1.85, marginBottom: 10 }}>
-              Sou a <strong style={{ color: S.dark as string }}>Miriam Pimenta</strong>, Musicoterapeuta, pedagoga e especialista em ABA (IPOG), dedicada ao desenvolvimento infantil de forma acolhedora e individualizada. Utilizo a música e estratégias terapêuticas para estimular a comunicação, a aprendizagem e as emoções das crianças. Na vida pessoal, sou casada com o Antônio e mãe do Guilherme e do João Victor.
+              Sou a <strong style={{ color: S.dark as string }}>Miriam Pimenta</strong>, Musicoterapeuta, pedagoga e especialista em ABA (IPOG), dedicada ao desenvolvimento infantil de forma acolhedora e individualizada. Utilizo a música e estratégias terapêuticas para estimular a comunicação, a aprendizagem e as emoções das crianças. Na vida pessoal, sou casada com o Antônio,mãe do Guilherme e do João Victor.
             </p>
             <p style={{ fontSize: 14, color: S.gray as string, marginBottom: 24 }}>
               <strong>Telefone:</strong> (62) 99171005
